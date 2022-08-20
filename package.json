@@ -1,0 +1,24 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "Yelpcamp Web Development Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niejiayi1998/YelpCamp.git"
+  },
+  "author": "Jiayi Nie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niejiayi1998/YelpCamp/issues"
+  },
+  "homepage": "https://github.com/niejiayi1998/YelpCamp#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2"
+  }
+}
