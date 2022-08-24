@@ -6,13 +6,17 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const User = require('./models/user');
+
 
 // Error Handling
 const ExpressError = require('./utils/ExpressError');
 
 // Routes
-const campgroundRoute = require('./routes/campgrounds');
-const reviewRoute = require('./routes/reviews');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
+const userRoutes = require('./routes/users');
 
 // connect to MongoDB using mongoose
 main().catch(err => console.log(err));
@@ -43,13 +47,21 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+// use passport-local for authentication
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // flash middleware
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
 })
-
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -57,8 +69,9 @@ app.get("/", (req, res) => {
 
 
 // Routes
-app.use("/campgrounds", campgroundRoute);
-app.use("/campgrounds/:id/reviews", reviewRoute);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/reviews", reviewRoutes);
+app.use("/", userRoutes);
 
 
 app.all("*", (req, res, next) => {
