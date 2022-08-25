@@ -16,7 +16,7 @@ const sample = (arr) => {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 300; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const camp = new Campground({
@@ -33,8 +33,15 @@ const seedDB = async () => {
                     filename: 'YelpCamp/tiqmdwxsslw4biioiyv6'
                 }
             ],
-            description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum porro quo distinctio similique odio natus sint laboriosam fugiat minima! Nulla recusandae libero dolores ratione illo ea eos nobis accusantium autem.",
-            price
+            description: "The camping welcomes you with there 90 pitches including 13 accommodation on a terrain of more than 3 hectares of land and terraces. And the campsite has a pitch and a shower and toilet for people with reduced mobility, but the terrain because of its topography is hard in accessibility.",
+            price,
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude
+                ]
+            }
         })
         await camp.save();
     }
