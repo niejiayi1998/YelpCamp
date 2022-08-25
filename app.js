@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+
 const express = require("express");
 const app = express();
 const engine = require("ejs-mate");
@@ -24,11 +25,13 @@ const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
 
+const dbUrl = process.env.DB_URL;
 // connect to MongoDB using mongoose
 main().catch((err) => console.log(err));
 
+// "mongodb://localhost:27017/yelp-camp"
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/yelp-camp");
+  await mongoose.connect(dbUrl);
   console.log("DATABASE CONNECTED");
 }
 
